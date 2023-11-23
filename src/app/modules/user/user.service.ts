@@ -1,39 +1,59 @@
 import { User } from "./user.interface";
 import { UserModel } from "./user.model";
+import bcrypt from 'bcrypt';
+
 
 const createUserIntoDB = async (user: User) => {
-    
     if (await UserModel.isUserExists(user.userId)) {
         throw new Error('User already exists!');
-      }
+    }
 
-    const result = await UserModel.create(user)
-    return result
+    // Hash the password before saving it
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    const userWithHashedPassword = { ...user, password: hashedPassword };
 
+    const result = await UserModel.create(userWithHashedPassword);
 
-
-
+    // Exclude the password field from the response
+    const { password, ...userWithoutPassword } = result.toObject();
+    return userWithoutPassword;
 }
-
 
 
 const getUser = async () => {
 
     const result = await UserModel.find()
 
-    return result
+    const usersWithoutPassword = result.map(user => {
+        const { password, ...userWithoutPassword } = user.toObject();
+        return userWithoutPassword;
+    });
+
+    return usersWithoutPassword;
+
 }
 
 
 const getSingleStudentFromDB = async (userId: number) => {
-
     const existingUser = await UserModel.isUserExists(userId);
     if (!existingUser) {
         throw new Error('Cannot find user!');
     }
-    const result = await UserModel.findOne({userId: userId}); 
-    return result;
-  };
+
+    const result = await UserModel.findOne({ userId });
+
+    if (!result) {
+        // Handle the case where no user is found with the specified userId
+        throw new Error('User not found!');
+    }
+
+    // Exclude the password field from the response
+    const { password, ...userWithoutPassword } = result.toObject();
+    return userWithoutPassword;
+};
+
+
+
 
   const updateUser = async (userId: number, updatedData: User) => {
     try {
@@ -48,7 +68,16 @@ const getSingleStudentFromDB = async (userId: number) => {
             { new: true } // This option returns the modified document
         );
 
-        return result;
+        if (!result) { 
+            throw new Error('User not found!');
+
+
+            
+        }
+
+        const {password, ...userWithoutPassword } = result.toObject();
+
+        return userWithoutPassword;
     } catch (error) {
         console.error(error);
         throw error; // Handle the error according to your application's needs
