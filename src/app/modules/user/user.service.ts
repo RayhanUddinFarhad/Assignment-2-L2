@@ -54,11 +54,32 @@ const getSingleStudentFromDB = async (userId: number) => {
         throw error; // Handle the error according to your application's needs
     }
 };
+  const deleteUserFromDB = async (userId: number) => {
+    try {
+
+        const existingUser = await UserModel.isUserExists(userId);
+        if (!existingUser) {
+            throw new Error('This user does not exist!');
+        }
+        const result = await UserModel.deleteOne(
+            {userId}
+        );
+
+        return result;
+    } catch (error) {
+        console.error(error);
+        throw error; // Handle the error according to your application's needs
+    }
+};
+
+
+
 
 
 export const UserService = {
     createUserIntoDB,
     getUser,
     getSingleStudentFromDB,
-    updateUser
+    updateUser,
+    deleteUserFromDB
 }
