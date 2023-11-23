@@ -28,8 +28,25 @@ const getSingleStudentFromDB = async (userId: string) => {
     return result;
   };
 
+  const updateUser = async (userId: string, updatedData: User) => {
+    try {
+        const result = await UserModel.findOneAndUpdate(
+            { userId: userId },
+            { $set: updatedData },
+            { new: true } // This option returns the modified document
+        );
+
+        return result;
+    } catch (error) {
+        console.error(error);
+        throw error; // Handle the error according to your application's needs
+    }
+};
+
+
 export const UserService = {
     createUserIntoDB,
     getUser,
-    getSingleStudentFromDB
+    getSingleStudentFromDB,
+    updateUser
 }
