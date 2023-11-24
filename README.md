@@ -15,30 +15,25 @@ Make sure you have the following installed on your machine:
 
 1. Clone the repository:
 
-   ```bash
    git clone  : https://github.com/RayhanUddinFarhad/Assignment-2-L2.git
 
  2. Navigate to the project directory:
 
- ```bash
-cd your-repository```
+cd your-repository
 
 3. Install dependencies:
  ```bash
-
 npm install
 
 4. Set up environment variables:
 
 Create a .env file in the root of the project with the following content:
 
-```bash
 
 PORT = 7000
 DATABASE_URL = mongodb+srv://yourDatabaseName:password@cluster0.tazahu7.mongodb.net/?retryWrites=true&w=majority
 
 5. Build the TypeScript code:
- ```bash
 
 npm run build
 
