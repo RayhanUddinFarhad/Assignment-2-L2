@@ -16,7 +16,7 @@ Make sure you have the following installed on your machine:
 1. Clone the repository:
 
    ```bash
-   git clone [https://github.com/](https://github.com/RayhanUddinFarhad/Assignment-2-L2.git)https://github.com/RayhanUddinFarhad/Assignment-2-L2.git
+   git clone  : https://github.com/RayhanUddinFarhad/Assignment-2-L2.git
 
  2. Navigate to the project directory:
 
@@ -29,6 +29,8 @@ npm install
 4. Set up environment variables:
 
 Create a .env file in the root of the project with the following content:
+
+<br>
 PORT = 7000
 DATABASE_URL = mongodb+srv://yourDatabaseName:password@cluster0.tazahu7.mongodb.net/?retryWrites=true&w=majority
 
