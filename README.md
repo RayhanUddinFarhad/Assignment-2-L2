@@ -20,9 +20,11 @@ Make sure you have the following installed on your machine:
 
  2. Navigate to the project directory:
 
+ ```bash
 cd your-repository
 
 3. Install dependencies:
+ ```bash
 
 npm install
 
@@ -30,11 +32,13 @@ npm install
 
 Create a .env file in the root of the project with the following content:
 
-<br>
+```bash
+
 PORT = 7000
 DATABASE_URL = mongodb+srv://yourDatabaseName:password@cluster0.tazahu7.mongodb.net/?retryWrites=true&w=majority
 
 5. Build the TypeScript code:
+ ```bash
 
 npm run build
 
