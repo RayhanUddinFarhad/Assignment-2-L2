@@ -4,9 +4,7 @@ import bcrypt from 'bcrypt';
 
 
 const createUserIntoDB = async (user: User) => {
-    if (await UserModel.isUserExists(user.userId)) {
-        throw { code: 404, description: 'User not found!' };
-    }
+    
 
     // Hash the password before saving it
     const hashedPassword = await bcrypt.hash(user.password, 10);

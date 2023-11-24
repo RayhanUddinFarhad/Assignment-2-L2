@@ -1,11 +1,14 @@
 import { Request, Response } from "express"
 import { UserService } from "./user.service"
+import userValidationSchema, { userNameSchema } from "./user.validation";
 
 const createUser = async (req: Request, res: Response) => {
 
     try {
 
         const userData = req.body
+        // userNameSchema.parse({ userData });
+
         const result = await UserService.createUserIntoDB(userData)
 
 
@@ -18,7 +21,7 @@ const createUser = async (req: Request, res: Response) => {
     } catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.description || 'something went wrong',
+            message: err.message || 'something went wrong',
 
             error: err,
 
@@ -86,6 +89,8 @@ const updateSingleUser = async (req: Request, res: Response) => {
     try {
         const { userId } = req.params;
         const newUser = req.body;
+        // userValidationSchema.parse({ newUser });
+
 
         const result = await UserService.updateUser(Number(userId), newUser);
 
@@ -108,6 +113,8 @@ const updateSingleUser = async (req: Request, res: Response) => {
 const deleteUser = async (req: Request, res: Response) => {
     try {
         const { userId } = req.params;
+        // userValidationSchema.parse({ userId });
+
 
         const result = await UserService.deleteUserFromDB(Number(userId));
 
@@ -134,6 +141,7 @@ const createOrderToDB = async (req: Request, res: Response) => {
     try {
         const { userId } = req.params
         const data = req.body
+
 
 
         const result = await UserService.createOrder(Number(userId), data)
@@ -185,10 +193,13 @@ const getSingleOrderFromDB = async (req: Request, res: Response) => {
 
 
 }
+
+
 const getCalculateProduct = async (req: Request, res: Response) => {
 
     try {
         const { userId } = req.params;
+
 
         const result = await UserService.calculateTotalPrice(Number(userId))
 

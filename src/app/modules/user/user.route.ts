@@ -4,7 +4,7 @@ import { UserController } from './user.controller';
 
 const router = express.Router()
 
-router.post('/create-user', UserController.createUser )
+router.post('/', UserController.createUser )
 router.get('/', UserController.getUser)
 router.get('/:userId', UserController.getSingleUser)
 router.put('/:userId', UserController.updateSingleUser)
