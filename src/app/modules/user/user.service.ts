@@ -132,7 +132,7 @@ const createOrder = async (userId: number, orderData : Order) => {
 
 
  }
-const getOrder = async (userId: number) => {
+const getSingleOrder = async (userId: number) => {
 
     const existingUser = await UserModel.isUserExists(userId);
     if (!existingUser) {
@@ -162,5 +162,6 @@ export const UserService = {
     getSingleStudentFromDB,
     updateUser,
     deleteUserFromDB,
-    createOrder
+    createOrder,
+    getSingleOrder
 }
