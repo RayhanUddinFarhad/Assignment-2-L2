@@ -29,7 +29,8 @@ npm install
 Create a .env file in the root of the project with the following content:
 
 
-PORT = 7000
+PORT = 7000,
+
 DATABASE_URL = mongodb+srv://yourDatabaseName:password@cluster0.tazahu7.mongodb.net/?retryWrites=true&w=majority
 
 5. Build the TypeScript code:
@@ -38,11 +39,9 @@ npm run build
 
 6. Run project on localhost using 'npm runstart:dev for development and npm run start:prod' for production purpose.
 
-   The application will be accessible at http://localhost:7000.
+The application will be accessible at http://localhost:7000.
 
    
-
-
 I have completed all instruction as mentioned. Here I have developed a Crud operation that can manage users and user's order .
 You can easily get user data by using API Endpoints '/api/users', You can post users data by using same endpoint.
 You can also get specific user data by using '/api/users/:userId', You can delete and update userdata using same endpoint. For update use PUT method.
