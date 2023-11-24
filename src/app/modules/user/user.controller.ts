@@ -18,7 +18,8 @@ const createUser = async (req: Request, res: Response) => {
     } catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message || 'something went wrong',
+            message: err.description || 'something went wrong',
+
             error: err,
 
         });
@@ -70,7 +71,8 @@ const getSingleUser = async (req: Request, res: Response) => {
     } catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message || 'something went wrong',
+            message: err.description || 'something went wrong',
+
             error: err,
 
         });
@@ -96,7 +98,8 @@ const updateSingleUser = async (req: Request, res: Response) => {
     } catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message || 'something went wrong',
+            message: err.description || 'something went wrong',
+
             error: err,
 
         });
@@ -117,7 +120,8 @@ const deleteUser = async (req: Request, res: Response) => {
     } catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message || 'something went wrong',
+            message: err.description || 'something went wrong',
+
             error: err,
 
         });
@@ -141,7 +145,8 @@ const createOrderToDB = async (req: Request, res: Response) => {
     } catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message || 'something went wrong',
+            message: err.description || 'something went wrong',
+
             error: err,
 
         });
@@ -172,7 +177,32 @@ const getSingleOrderFromDB = async (req: Request, res: Response) => {
     } catch (err: any) {
         res.status(500).json({
             success: false,
-            message: err.message || 'something went wrong',
+            message: err.description || 'something went wrong',
+            error: err,
+
+        });
+    }
+
+
+}
+const getCalculateProduct = async (req: Request, res: Response) => {
+
+    try {
+        const { userId } = req.params;
+
+        const result = await UserService.calculateTotalPrice(Number(userId))
+
+
+        res.status(200).json({
+            success: true,
+            message: 'Order fetched successfully!',
+            data: result,
+        });
+
+    } catch (err: any) {
+        res.status(500).json({
+            success: false,
+            message: err.description || 'something went wrong',
             error: err,
 
         });
@@ -190,5 +220,6 @@ export const UserController = {
     updateSingleUser,
     deleteUser,
     createOrderToDB,
-    getSingleOrderFromDB
+    getSingleOrderFromDB,
+    getCalculateProduct
 }

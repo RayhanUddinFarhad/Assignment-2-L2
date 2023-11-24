@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 
 const createUserIntoDB = async (user: User) => {
     if (await UserModel.isUserExists(user.userId)) {
-        throw new Error('User already exists!');
+        throw { code: 404, description: 'User not found!' };
     }
 
     // Hash the password before saving it
@@ -37,7 +37,7 @@ const getUser = async () => {
 const getSingleStudentFromDB = async (userId: number) => {
     const existingUser = await UserModel.isUserExists(userId);
     if (!existingUser) {
-        throw new Error('Cannot find user!');
+        throw { code: 404, description: 'User not found!' };
     }
 
     const result = await UserModel.findOne({ userId });
@@ -59,7 +59,7 @@ const getSingleStudentFromDB = async (userId: number) => {
 
         const existingUser = await UserModel.isUserExists(userId);
         if (!existingUser) {
-            throw new Error('This user does not exist!');
+            throw { code: 404, description: 'User not found!' };
         }
         const result = await UserModel.findOneAndUpdate(
             { userId: userId },
@@ -88,7 +88,7 @@ const getSingleStudentFromDB = async (userId: number) => {
 
         const existingUser = await UserModel.isUserExists(userId);
         if (!existingUser) {
-            throw new Error('This user does not exist!');
+            throw new Error('This user not found!');
         }
         const result = await UserModel.deleteOne(
             {userId}
@@ -105,7 +105,7 @@ const createOrder = async (userId: number, orderData : Order) => {
 
     const existingUser = await UserModel.isUserExists(userId);
     if (!existingUser) {
-        throw new Error('This user does not exist!');
+        throw { code: 404, description: 'User not found!' };
     }
 
     const orders = existingUser.orders || [];
@@ -136,7 +136,7 @@ const getSingleOrder = async (userId: number) => {
 
     const existingUser = await UserModel.isUserExists(userId);
     if (!existingUser) {
-        throw new Error('This user does not exist!');
+        throw { code: 404, description: 'User not found!' };
     }
 
     const result = await UserModel.findOne({ userId: userId})
@@ -149,6 +149,26 @@ const getSingleOrder = async (userId: number) => {
 
 
  }
+
+ const calculateTotalPrice = async (userId: number) => {
+    const existingUser = await UserModel.isUserExists(userId);
+    if (!existingUser) {
+        throw { code: 404, description: 'User not found!' };
+    }
+
+    
+
+    // Calculate the total price of all orders
+    const totalPrice = existingUser.orders.reduce(
+        (acc, order) => acc + order.price * order.quantity,
+        0
+    );
+
+    const result = totalPrice.toFixed(2)
+
+    return result
+};
+
 
  
 
@@ -163,5 +183,6 @@ export const UserService = {
     updateUser,
     deleteUserFromDB,
     createOrder,
-    getSingleOrder
+    getSingleOrder,
+    calculateTotalPrice
 }
