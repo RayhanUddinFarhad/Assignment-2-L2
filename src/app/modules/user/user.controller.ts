@@ -85,6 +85,10 @@ const updateSingleUser = async (req: Request, res: Response) => {
     });
   }
 };
+
+
+
+
 const deleteUser = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
@@ -106,6 +110,8 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
+
+
 const createOrderToDB = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
@@ -126,6 +132,7 @@ const createOrderToDB = async (req: Request, res: Response) => {
     });
   }
 };
+
 
 const getSingleOrderFromDB = async (req: Request, res: Response) => {
   try {
@@ -155,7 +162,7 @@ const getCalculateProduct = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      message: "Order fetched successfully!",
+      message: "Total price calculated successfully!!",
       data: result,
     });
   } catch (err: any) {

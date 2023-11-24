@@ -25,6 +25,15 @@ const getUser = async () => {
   return usersWithoutPassword;
 };
 
+
+
+
+
+
+
+
+
+
 const getSingleStudentFromDB = async (userId: number) => {
   const existingUser = await UserModel.isUserExists(userId);
   if (!existingUser) {
@@ -42,6 +51,9 @@ const getSingleStudentFromDB = async (userId: number) => {
   const { password, ...userWithoutPassword } = result.toObject();
   return userWithoutPassword;
 };
+
+
+
 
 const updateUser = async (userId: number, updatedData: User) => {
   const existingUser = await UserModel.isUserExists(userId);
@@ -63,6 +75,9 @@ const updateUser = async (userId: number, updatedData: User) => {
   return userWithoutPassword;
 };
 
+
+
+
 const deleteUserFromDB = async (userId: number) => {
   const existingUser = await UserModel.isUserExists(userId);
   if (!existingUser) {
@@ -72,6 +87,10 @@ const deleteUserFromDB = async (userId: number) => {
 
   return result;
 };
+
+
+
+
 
 const createOrder = async (userId: number, orderData: Order) => {
   const existingUser = await UserModel.isUserExists(userId);
@@ -97,6 +116,10 @@ const createOrder = async (userId: number, orderData: Order) => {
 
   return result;
 };
+
+
+
+
 const getSingleOrder = async (userId: number) => {
   const existingUser = await UserModel.isUserExists(userId);
   if (!existingUser) {
@@ -108,6 +131,10 @@ const getSingleOrder = async (userId: number) => {
   return result;
 };
 
+
+
+
+
 const calculateTotalPrice = async (userId: number) => {
   const existingUser = await UserModel.isUserExists(userId);
   if (!existingUser) {
@@ -115,14 +142,14 @@ const calculateTotalPrice = async (userId: number) => {
   }
 
   // Calculate the total price of all orders
-  const totalPrice = existingUser.orders.reduce(
+  const price = existingUser.orders.reduce(
     (acc, order) => acc + order.price * order.quantity,
     0,
   );
 
-  const result = totalPrice.toFixed(2);
+  const totalPrice = price.toFixed(2);
 
-  return result;
+  return {totalPrice};
 };
 
 export const UserService = {
