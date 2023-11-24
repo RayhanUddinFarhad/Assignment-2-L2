@@ -1,4 +1,4 @@
-import { User } from "./user.interface";
+import { Order, User } from "./user.interface";
 import { UserModel } from "./user.model";
 import bcrypt from 'bcrypt';
 
@@ -56,7 +56,6 @@ const getSingleStudentFromDB = async (userId: number) => {
 
 
   const updateUser = async (userId: number, updatedData: User) => {
-    try {
 
         const existingUser = await UserModel.isUserExists(userId);
         if (!existingUser) {
@@ -78,13 +77,14 @@ const getSingleStudentFromDB = async (userId: number) => {
         const {password, ...userWithoutPassword } = result.toObject();
 
         return userWithoutPassword;
-    } catch (error) {
-        console.error(error);
-        throw error; // Handle the error according to your application's needs
-    }
+   
 };
+
+
+
+
   const deleteUserFromDB = async (userId: number) => {
-    try {
+
 
         const existingUser = await UserModel.isUserExists(userId);
         if (!existingUser) {
@@ -95,11 +95,62 @@ const getSingleStudentFromDB = async (userId: number) => {
         );
 
         return result;
-    } catch (error) {
-        console.error(error);
-        throw error; // Handle the error according to your application's needs
-    }
+    
 };
+
+
+
+
+const createOrder = async (userId: number, orderData : Order) => {
+
+    const existingUser = await UserModel.isUserExists(userId);
+    if (!existingUser) {
+        throw new Error('This user does not exist!');
+    }
+
+    const orders = existingUser.orders || [];
+
+    // Append the new order data to the orders array
+    orders.push(orderData);
+
+    // Update the user with the new orders data
+    const result = await UserModel.findOneAndUpdate(
+        { userId: userId },
+        { $set: { orders: orders } },
+        { new: true }
+    );
+
+    if (!result) {
+        throw new Error('Failed to update user with new order data!');
+    }
+
+    return result;
+    
+
+
+
+
+
+ }
+const getOrder = async (userId: number) => {
+
+    const existingUser = await UserModel.isUserExists(userId);
+    if (!existingUser) {
+        throw new Error('This user does not exist!');
+    }
+
+    const result = await UserModel.findOne({ userId: userId})
+
+    return result;
+    
+
+
+
+
+
+ }
+
+ 
 
 
 
@@ -110,5 +161,6 @@ export const UserService = {
     getUser,
     getSingleStudentFromDB,
     updateUser,
-    deleteUserFromDB
+    deleteUserFromDB,
+    createOrder
 }

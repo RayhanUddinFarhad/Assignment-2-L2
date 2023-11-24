@@ -9,5 +9,7 @@ router.get('/', UserController.getUser)
 router.get('/:userId', UserController.getSingleUser)
 router.put('/:userId', UserController.updateSingleUser)
 router.delete('/:userId', UserController.deleteUser)
+router.put('/:userId/orders', UserController.createOrderToDB)
+
 
 export const UserRoutes = router
