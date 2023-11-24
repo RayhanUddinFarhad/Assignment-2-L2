@@ -1,13 +1,14 @@
 import { Request, Response } from "express"
 import { UserService } from "./user.service"
-import userValidationSchema, { userNameSchema } from "./user.validation";
+import { createUserSchema, updateUserSchema } from "./user.validation";
 
 const createUser = async (req: Request, res: Response) => {
 
     try {
 
         const userData = req.body
-        // userNameSchema.parse({ userData });
+        createUserSchema.parse(userData);
+
 
         const result = await UserService.createUserIntoDB(userData)
 
@@ -89,7 +90,7 @@ const updateSingleUser = async (req: Request, res: Response) => {
     try {
         const { userId } = req.params;
         const newUser = req.body;
-        // userValidationSchema.parse({ newUser });
+        updateUserSchema.parse(newUser)
 
 
         const result = await UserService.updateUser(Number(userId), newUser);
@@ -113,7 +114,6 @@ const updateSingleUser = async (req: Request, res: Response) => {
 const deleteUser = async (req: Request, res: Response) => {
     try {
         const { userId } = req.params;
-        // userValidationSchema.parse({ userId });
 
 
         const result = await UserService.deleteUserFromDB(Number(userId));

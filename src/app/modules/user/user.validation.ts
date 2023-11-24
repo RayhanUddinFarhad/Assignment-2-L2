@@ -18,7 +18,7 @@ export const orderSchema = z.object({
     quantity: z.number(),
 });
 
-export const userValidationSchema = z.object({
+export const userSchema = z.object({
     userId: z.number(),
     username: z.string(),
     password: z.string(),
@@ -31,4 +31,25 @@ export const userValidationSchema = z.object({
     orders: z.array(orderSchema),
 });
 
-export default userValidationSchema
+export const createUserSchema = z.object({
+    userId: z.number(),
+    username: z.string(),
+    password: z.string(),
+    fullName: userNameSchema,
+    age: z.number(),
+    email: z.string(),
+    isActive: z.boolean(),
+    hobbies: z.array(z.string()),
+    address: addressSchema,
+});
+
+export const updateUserSchema = z.object({
+    username: z.string().optional(),
+    password: z.string().optional(),
+    fullName: userNameSchema.optional(),
+    age: z.number().optional(),
+    email: z.string().optional(),
+    isActive: z.boolean().optional(),
+    hobbies: z.array(z.string()).optional(),
+    address: addressSchema.optional(),
+});
