@@ -22,7 +22,6 @@ Make sure you have the following installed on your machine:
 cd your-repository
 
 3. Install dependencies:
- ```bash
 npm install
 
 4. Set up environment variables:
