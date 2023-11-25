@@ -14,15 +14,29 @@ const createUserIntoDB = async (user: User) => {
   return userWithoutPassword;
 };
 
-const getUser = async () => {
-  const result = await UserModel.find();
+const getAllUsersFromDB = async () => {
+  try {
+    const users = await UserModel.aggregate([
+      {
+        $project: {
+          _id: 0, 
+          username: 1,
+          fullName: 1,
+          age: 1,
+          email: 1,
+          address: 1,
+        },
+      },
+    ]);
 
-  const usersWithoutPassword = result.map((user) => {
-    const { password, ...userWithoutPassword } = user.toObject();
-    return userWithoutPassword;
-  });
+    if (!users || users.length === 0) {
+      throw { code: 404, description: "No users found!" };
+    }
 
-  return usersWithoutPassword;
+    return users;
+  } catch (error) {
+    throw error;
+  }
 };
 
 
@@ -34,7 +48,7 @@ const getUser = async () => {
 
 
 
-const getSingleStudentFromDB = async (userId: number) => {
+const getSinglUserFromDB = async (userId: number) => {
   const existingUser = await UserModel.isUserExists(userId);
   if (!existingUser) {
     throw { code: 404, description: "User not found!" };
@@ -154,8 +168,8 @@ const calculateTotalPrice = async (userId: number) => {
 
 export const UserService = {
   createUserIntoDB,
-  getUser,
-  getSingleStudentFromDB,
+  getAllUsersFromDB,
+  getSinglUserFromDB,
   updateUser,
   deleteUserFromDB,
   createOrder,

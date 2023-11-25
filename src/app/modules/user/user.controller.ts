@@ -26,7 +26,7 @@ const createUser = async (req: Request, res: Response) => {
 
 const getUser = async (req: Request, res: Response) => {
   try {
-    const result = await UserService.getUser();
+    const result = await UserService.getAllUsersFromDB();
 
     res.status(200).json({
       success: true,
@@ -46,7 +46,7 @@ const getSingleUser = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
 
-    const result = await UserService.getSingleStudentFromDB(Number(userId));
+    const result = await UserService.getSinglUserFromDB(Number(userId));
 
     res.status(200).json({
       success: true,
